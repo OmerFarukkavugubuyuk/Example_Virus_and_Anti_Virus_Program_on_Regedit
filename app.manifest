@@ -17,7 +17,7 @@
   <!-- Montaj Kimliği -->
   <assemblyIdentity
     version="1.0.0.0"
-    processorArchitecture="AMD64"
+    processorArchitecture="*"
     name="RegShield.Antivirus"
     type="win32" />
 
