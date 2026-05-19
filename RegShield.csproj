@@ -1,0 +1,74 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Hedef Framework: .NET 8 LTS önerilir; .NET 6 veya .NET Framework 4.7.2 de desteklenir -->
+    <TargetFramework>net8.0-windows</TargetFramework>
+    
+    <!-- WinForms kullanımı için zorunlu -->
+    <UseWindowsForms>true</UseWindowsForms>
+    
+    <!-- Windows'a özgü Platform API'leri (Registry, Win32) için -->
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    
+    <!-- Çıktı tipi: Windows uygulaması (konsol penceresi açılmaz) -->
+    <OutputType>WinExe</OutputType>
+    
+    <!-- Assembly bilgileri -->
+    <AssemblyName>RegShield</AssemblyName>
+    <RootNamespace>RegShield</RootNamespace>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Company>RegShield Security</Company>
+    <Product>RegShield Antivirus</Product>
+    <Description>Registry Odaklı Başlangıç Kaydı Güvenlik Tarayıcısı</Description>
+    <Copyright>Copyright © 2025</Copyright>
+    
+    <!-- 
+      Yönetici Yetkisi (UAC) Manifest Ayarı
+      app.manifest dosyasını projeye ekledikten sonra buradaki satırı etkinleştirin:
+      
+      <ApplicationManifest>app.manifest</ApplicationManifest>
+      
+      Visual Studio'da: Project > Properties > Application > Manifest > app.manifest seçin.
+      
+      NOT: Bu ayar olmadan Registry WRITE/DELETE işlemleri başarısız olabilir.
+    -->
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    
+    <!-- Nullable referans tipleri — daha güvenli kod için önerilir -->
+    <Nullable>enable</Nullable>
+    
+    <!-- Örtük using direktifleri (System, System.IO vb. otomatik eklenir) -->
+    <ImplicitUsings>enable</ImplicitUsings>
+    
+    <!-- Uyarıları hata olarak işleme (production için önerilir) -->
+    <!-- <TreatWarningsAsErrors>true</TreatWarningsAsErrors> -->
+    
+    <!-- DPI farkındalığı -->
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+  </PropertyGroup>
+
+  <!-- 
+    NuGet Paket Referansları
+    System.Text.Json: .NET 5+'da dahili gelir, .NET Framework için gerekli
+  -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+    <PackageReference Include="System.Text.Json" Version="8.0.0" />
+  </ItemGroup>
+
+  <!--
+    Microsoft.Win32.Registry: Registry API'sine erişim için
+    .NET Core/5+ projelerinde gereklidir (Framework'te dahilidir)
+  -->
+  <ItemGroup Condition="'$(TargetFramework)' != 'net472'">
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+  </ItemGroup>
+
+  <!-- 
+    OPSIYONEL: Gerçek .exe üretimi için Roslyn Scripting paketi
+    VirusSimulator.cs'deki Production notuna bakın.
+    
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.0" />
+  -->
+
+</Project>

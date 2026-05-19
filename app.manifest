@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  app.manifest — Uygulama Bildirim Dosyası
+  =========================================
+  Bu dosya, uygulamanın Windows'tan "Yönetici" (Administrator) yetkisiyle
+  çalışmasını talep etmesini sağlar. Regedit yazma/silme ve sistem dosyalarına
+  erişim için bu yetki zorunludur.
+
+  Visual Studio'da bu dosyayı projeye eklemek için:
+    Proje > Özellikler > Uygulama > Bildirim: app.manifest seç
+  veya
+    Proje dosyasına (.csproj) şunu ekleyin:
+      <ApplicationManifest>app.manifest</ApplicationManifest>
+-->
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+  <!-- Montaj Kimliği -->
+  <assemblyIdentity
+    version="1.0.0.0"
+    processorArchitecture="AMD64"
+    name="RegShield.Antivirus"
+    type="win32" />
+
+  <!-- Açıklama -->
+  <description>RegShield — Registry Odaklı Antivirüs Uygulaması</description>
+
+  <!-- UAC (User Account Control) Yetki Ayarı -->
+  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">
+    <security>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          requireAdministrator : Uygulama her zaman yönetici olarak çalışır,
+                                  yönetici değilse UAC yükseltme penceresi açılır.
+          highestAvailable      : Mevcut kullanıcının alabileceği en yüksek yetkiyle çalışır.
+          asInvoker             : (Varsayılan) Başlatan kullanıcının yetkisiyle çalışır.
+        -->
+        <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+
+  <!-- Windows 10/11 Uyumluluğu -->
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- Windows 10 ve Windows 11 -->
+      <supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />
+    </application>
+  </compatibility>
+
+  <!-- DPI Farkındalığı (Yüksek çözünürlüklü ekranlar için) -->
+  <application xmlns="urn:schemas-microsoft-com:asm.v3">
+    <windowsSettings>
+      <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true/PM</dpiAware>
+      <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitorV2</dpiAwareness>
+    </windowsSettings>
+  </application>
+
+</assembly>
